@@ -30,54 +30,12 @@
 	h = new L.Hash(m),
 	d = new L.Control.Draw().addTo(m),
 	drawnStuff = L.geoJson("",{pointToLayer:pointToLayer,onEachFeature:popUp}).addTo(m);
-	m.on('draw:poly-created', function (e) {
-			doStuff(L.Util.toGeoJSON(e.poly,e.poly.options.type));
+	m.on('drawn', function (e) {
+			doStuff(e.feature);
 		});
-	m.on('draw:rectangle-created', function (e) {
-			doStuff(L.Util.toGeoJSON(e.rect,"rectangle"));
-		});
-	m.on('draw:circle-created', function (e) {
-			doStuff(L.Util.toGeoJSON(e.circ,"circle"));
-		});
-	m.on('draw:marker-created', function (e) {
-			doStuff(L.Util.toGeoJSON(e.marker,"marker"));
-});
+	
 
-L.Util.latLngToXY = function (ll){
-	return [ll.lng,ll.lat]
-}
 
-L.Util.toGeoJSON = function (shape,type){
-	var base = { 
-		"type": "Feature",
-		"geometry": {},
-		"properties": {"Created In":"Leaflet"}
-	};
-	switch(type){
-		case "marker": 
-			base.geometry.type = "Point";
-			base.geometry.coordinates = L.Util.latLngToXY(shape.getLatLng());
-			break;
-		case "circle":
-			base.geometry.type = "Point";
-			base.geometry.coordinates = L.Util.latLngToXY(shape.getLatLng());
-			base.properties.radius = shape.getRadius();
-			break;
-		case "rectangle":
-			base.geometry.type = "Polygon";
-			base.geometry.coordinates = [shape.getLatLngs().map(L.Util.latLngToXY)];
-			break;
-		case "polygon":
-			base.geometry.type = "Polygon";
-			base.geometry.coordinates = [shape.getLatLngs().map(L.Util.latLngToXY)];
-			break;
-		case "polyline":
-			base.geometry.type = "LineString";
-			base.geometry.coordinates = shape.getLatLngs().map(L.Util.latLngToXY);
-			break;
-	};
-	return base;
-}
 function doStuff(data){
 	drawnStuff.addData(data);
 	db.post(data);
