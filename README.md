@@ -10,3 +10,9 @@ if you have erica installed you should be able to go
 cd leaf-couch
 erica push http://localhost:5984/leaflet
 ```
+
+todo
+---
+
+- edit properties
+- make map of http://localhost:5984/leaflet/_design/leaflet/_spatial/_list/geojson/all?bbox= bbox which updates on move/zoom
