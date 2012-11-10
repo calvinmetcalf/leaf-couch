@@ -15,5 +15,5 @@ todo
 ---
 
 - edit properties
-- make map of http://localhost:5984/leaflet/_design/leaflet/_spatial/_list/geojson/all?bbox= bbox which updates on move/zoom
+- m̶a̶k̶e̶ ̶m̶a̶p̶ ̶o̶f̶ ̶h̶t̶t̶p̶:̶/̶/̶l̶o̶c̶a̶l̶h̶o̶s̶t̶:̶5̶9̶8̶4̶/̶l̶e̶a̶f̶l̶e̶t̶/̶_̶d̶e̶s̶i̶g̶n̶/̶l̶e̶a̶f̶l̶e̶t̶/̶_̶s̶p̶a̶t̶i̶a̶l̶/̶_̶l̶i̶s̶t̶/̶g̶e̶o̶j̶s̶o̶n̶/̶a̶l̶l̶?̶b̶b̶o̶x̶=̶ ̶b̶b̶o̶x̶ ̶w̶h̶i̶c̶h̶ ̶u̶p̶d̶a̶t̶e̶s̶ ̶o̶n̶ ̶m̶o̶v̶e̶/̶z̶o̶o̶m̶
 - authentication
