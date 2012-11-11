@@ -37,11 +37,11 @@
 	m.on('drawn', function (e) {
 			doStuff(e.feature);
 		});
-		
-		m.on("move", function(){
+	function redoJson(){
 		allStuff.clearLayers();
 		allStuff.addUrl(document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1]+"/"+document.location.pathname.split("/")[2]+"/"+document.location.pathname.split("/")[3]+"/_spatial/_list/geojson/all?bbox="+m.getBounds().toBBoxString());
-		});
+		}	
+		m.on("moveend", redoJson);
 	var baseMaps = {
     "Map Quest": mq
     }, overlayMaps = {
