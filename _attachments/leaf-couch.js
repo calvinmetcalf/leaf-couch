@@ -1,10 +1,15 @@
-var db, dbPath= document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
-Pouch(dbPath, function(e, dd){
-	if(!e){
-		db = dd;
-		changes=db.changes({continuous:true});
-	}});
-	
+var db,rdb, dbPath= document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
+Pouch("idb://leafcouch",function(e1,db1){
+    if(!e1){
+        db=db1;
+        Pouch(dbPath,function(e2,db2){
+             if(!e2){
+                rdb=db2;
+                db.replicate.to(rdb,{continuous:true});
+            }
+        });
+    }
+});
 var m= L.map('map').setView([39.40, -96.42], 4),
 	mq=L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpeg", {attribution:'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', subdomains:'1234'}).addTo(m),
 	h = new L.Hash(m),
