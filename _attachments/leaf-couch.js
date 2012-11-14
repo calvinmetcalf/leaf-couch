@@ -35,8 +35,13 @@ var baseMaps = {
 	},lc=L.control.layers(baseMaps, overlayMaps).addTo(m);
 
 function doStuff(data){
-	drawnStuff.addData(data);
-	db.post(data);
+	db.post(data,function(e,r){
+		if(!e){
+			data.properties._id = r.id;
+			data.properties._rev = r.rev;
+			drawnStuff.addData(data);
+			}
+	});
 }
 
 function pointToLayer(f,l){
@@ -57,3 +62,8 @@ function popUp(f,l){
         l.bindPopup(out.join("<br />"));
     }
 }
+
+//allStuff.on("click",function(e){
+//var doc = e.layer.feature;
+//var props = doc.properties;
+//});
