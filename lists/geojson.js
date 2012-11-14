@@ -9,12 +9,7 @@ function(head, req) {
         send(req.query['callback'] + "(");
     }    send('{"type": "FeatureCollection", "features":[');
     while (row = getRow()) {
-        out = JSON.stringify({
-        	type: "Feature", 
-        	geometry: row.value.geometry, 
-        	properties: row.value.properties
-        });
-        send(sep + out);        sep = ',\n';
+        send(sep + JSON.stringify(row.value.geometry));        sep = ',\n';
     }
     send("]}");
     if ('callback' in req.query) {
