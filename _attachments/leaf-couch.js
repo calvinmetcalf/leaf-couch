@@ -52,7 +52,7 @@ function popUp(f,l){
         for(key in f.properties){
             	out.push(key+": "+f.properties[key]);
         }
-        l.bindPopup("<div id='" + f._id+"'>"+out.join("<br />")+"</div>");
+        l.bindPopup("<div id='" + f._id+"'>"+out.join("<br />")+"<br /><input type='button' value='delete' id='deleteDoc'></div>");
     }
 }
 function docChange(c){
@@ -70,7 +70,13 @@ if(f.feature._id===id){
 layer.removeLayer(f);
 }
 })}
-/*allStuff.on("click",function(e){
-var doc = e.layer.feature;
-var props = doc.properties;
-});*/
+m.on("popupopen",function(e){
+    var id = e.popup._source.feature._id;
+    L.DomEvent.addListener(L.DomUtil.get("deleteDoc"),"click",function(click){
+       
+db.get(id, function(err, doc) {
+  db.remove(doc, function(err, response) {
+  })
+})
+        });
+});
