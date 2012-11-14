@@ -52,17 +52,18 @@ function popUp(f,l){
         for(key in f.properties){
             	out.push(key+": "+f.properties[key]);
         }
-        l.bindPopup(out.join("<br />"));
+        l.bindPopup("<div id='" + f._id+"'>"+out.join("<br />")+"</div>");
     }
 }
 function docChange(c){
+    if(c){
 var doc = c.doc;    
 if(!doc._deleted){
 drawnStuff.addData(doc);
 }else if(doc._deleted){
     delId(drawnStuff,doc._id);
 }
-}
+}}
 function delId(layer,id){
 layer.eachLayer(function(f){
 if(f.feature._id===id){
