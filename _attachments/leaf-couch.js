@@ -69,7 +69,7 @@ if(f.feature._id===id){
 layer.removeLayer(f);
 }
 })}
-//allStuff.on("click",function(e){
-//var doc = e.layer.feature;
-//var props = doc.properties;
-//});
+/*allStuff.on("click",function(e){
+var doc = e.layer.feature;
+var props = doc.properties;
+});*/
