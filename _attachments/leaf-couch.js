@@ -93,8 +93,9 @@ if(f.feature._id===id){
 layer.removeLayer(f);
 }
 })}
-var ee;
+
 m.on("popupopen",function(e){
+
     if(e.popup._source._leaflet_id in drawnStuff._layers){
     var id = e.popup._source.feature._id;
     L.DomEvent.addListener(L.DomUtil.get("deleteDoc"),"click",function(click){
@@ -118,8 +119,9 @@ m.on("popupopen",function(e){
       sub.setAttribute("value","save");
       form.appendChild(sub);
       form.onsubmit=function(e){
-        var key = e.srcElement[0].value;
-        var value = e.srcElement[1].value
+
+        var key = e.target[0].value;
+        var value = e.target[1].value
         db.get(id,function(err,dc){
             dc.properties[key]=value;
             db.post(dc);
