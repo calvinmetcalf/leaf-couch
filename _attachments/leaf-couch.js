@@ -1,5 +1,5 @@
 var db,rdb, dbPath=  document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
-Pouch("idb://leafcouch",function(e1,db1){
+Pouch("idb://couch-leaf",function(e1,db1){
     if(!e1){
         db=db1;
         db.changes({continuous:true,onChange:docChange,include_docs:true},pass);
@@ -67,22 +67,22 @@ function popU(f,l){
 }
 function docChange(c){
 var doc = c.doc;    
-if(doc._rev.slice(0,1)==1){
+if(doc._rev.slice(0,1)==1&&"geometry" in doc){
 drawnStuff.addData(doc);
 }else if(doc._rev.slice(0,1)>1){
     delId(drawnStuff,doc._id);
-    if(!doc._deleted){
+    if(!doc._deleted&&"geometry" in doc){
     drawnStuff.addData(doc);
 }
 }
 }
 function rdocChange(c){
 var doc = c.doc;    
-if(doc._rev.slice(0,1)==1){
+if(doc._rev.slice(0,1)==1&&"geometry" in doc){
 allStuff.addData(doc);
 }else if(doc._rev.slice(0,1)>1){
     delId(allStuff,doc._id);
-    if(!doc._deleted){
+    if(!doc._deleted&&"geometry" in doc){
     allStuff.addData(doc);
 }
 }
