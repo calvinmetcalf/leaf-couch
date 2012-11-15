@@ -50,9 +50,9 @@ function popUp(f,l){
     var out = [];
     if (f.properties){
         for(key in f.properties){
-            	out.push(key+": "+f.properties[key]);
+            	out.push(key+": "+f.properties[key] + " <a href='#' id='key-"+key+"' class='delete-row'>x</a>");
         }
-        l.bindPopup("<div id='" + f._id+"'>"+out.join("<br />")+"</div><br /><input type='button' value='Add Row' id='addRow'><input type='button' value='delete' id='deleteDoc'>");
+        l.bindPopup("<div class='"+ out.lenghth+"' id='" + f._id+"'>"+out.join("<br />")+"</div><br /><input type='button' value='Add Row' id='addRow'><input type='button' value='delete' id='deleteDoc'>");
     }
 }
 function docChange(c){
@@ -106,5 +106,12 @@ m.on("popupopen",function(e){
       div.appendChild(form);
       
     });
+    $(".delete-row").click(function(e){ //almost did this without jquery
+        var key = e.currentTarget.id.slice(4)
+        db.get(id,function(err,dc){
+            delete dc.properties[key]
+            db.post(dc);
+            })
+        })
 });
 function pass(){}
