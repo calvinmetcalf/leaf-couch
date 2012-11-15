@@ -1,4 +1,4 @@
-var db,rdb, dbPath= "idb://remotecouch";// document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
+var db,rdb, dbPath=  document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
 Pouch("idb://leafcouch",function(e1,db1){
     if(!e1){
         db=db1;
