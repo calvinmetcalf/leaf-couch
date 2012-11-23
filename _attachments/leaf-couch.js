@@ -1,4 +1,4 @@
-var db,rdb, dbPath=  document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
+var db,rdb, dbPath = document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1];
 Pouch("idb://couch-leaf",function(e1,db1){
     if(!e1){
         db=db1;
@@ -17,7 +17,7 @@ var m= L.map('map').setView([39.40, -96.42], 4),
 	h = new L.Hash(m),
 	d = new L.Control.Draw().addTo(m),
 	drawnStuff = L.geoJson("",{pointToLayer:pointToLayer,onEachFeature:popUp}).addTo(m),
-	allStuff = L.geoJson("",{pointToLayer:pointToLayer,onEachFeature:popU})
+	allStuff = L.geoJson("",{pointToLayer:pointToLayer,onEachFeature:popUp})
 	m.on('drawn', function (e) {
 			doStuff(e.feature);
 		});
@@ -50,7 +50,7 @@ function pointToLayer(f,l){
 function popUp(f,l){
     var out = [];
     if (f.properties){
-        for(key in f.properties){
+        for(var key in f.properties){
             	out.push(key+": "+f.properties[key] + " <a href='#' id='key-"+key+"' class='delete-row'>x</a>");
         }
         l.bindPopup("<div class='"+ out.lenghth+"' id='" + f._id+"'>"+out.join("<br />")+"</div><br /><input type='button' value='Add Row' id='addRow'><input type='button' value='delete' id='deleteDoc'>");
@@ -59,7 +59,7 @@ function popUp(f,l){
 function popU(f,l){
     var out = [];
     if (f.properties){
-        for(key in f.properties){
+        for(var key in f.properties){
                 out.push(key+": "+f.properties[key]);
         }
         l.bindPopup(out.join("<br />"));
@@ -93,14 +93,19 @@ if(f.feature._id===id){
 layer.removeLayer(f);
 }
 })}
-
+var ee,eee,dd;
 m.on("popupopen",function(e){
-
+    var tdb;
     if(e.popup._source._leaflet_id in drawnStuff._layers){
+        tdb = db;
+    }else if(e.popup._source._leaflet_id in allStuff._layers){
+        tdb = rdb;   
+    }
     var id = e.popup._source.feature._id;
+    eee=id;
     L.DomEvent.addListener(L.DomUtil.get("deleteDoc"),"click",function(click){
-        db.get(id, function(err, doc) {
-            db.remove(doc, pass);
+        tdb.get(id, function(err, doc) {
+            tdb.remove(doc, pass);
         });
     });
     L.DomEvent.addListener(L.DomUtil.get("addRow"),"click",function(click){
@@ -122,9 +127,9 @@ m.on("popupopen",function(e){
 
         var key = e.target[0].value;
         var value = e.target[1].value
-        db.get(id,function(err,dc){
-            dc.properties[key]=value;
-            db.post(dc);
+        tdb.get(id,function(err,dc){
+            tdb.properties[key]=value;
+            tdb.post(dc);
             })
         return false;
         };
@@ -132,11 +137,13 @@ m.on("popupopen",function(e){
       
     });
     $(".delete-row").click(function(e){ //almost did this without jquery
+    ee=e;
         var key = e.currentTarget.id.slice(4)
-        db.get(id,function(err,dc){
+        tdb.get(id,function(err,dc){
+            dd=dc;
             delete dc.properties[key]
-            db.post(dc);
+            tdb.post(dc);
             })
-        })
-}});
+        });
+});
 function pass(){}
