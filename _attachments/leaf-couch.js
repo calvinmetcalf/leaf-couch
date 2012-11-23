@@ -22,12 +22,6 @@ var m= L.map('map').setView([39.40, -96.42], 4),
 			doStuff(e.feature);
 		});
 		
-function redoJson(){
-		allStuff.clearLayers();
-		allStuff.addUrl(document.location.protocol+"//"+document.location.host+"/"+document.location.pathname.split("/")[1]+"/"+document.location.pathname.split("/")[2]+"/"+document.location.pathname.split("/")[3]+"/_spatial/_list/geojson/all?bbox="+m.getBounds().toBBoxString());
-		};
-		
-//m.on("moveend", redoJson);
 
 var baseMaps = {
     "Map Quest": mq
@@ -54,15 +48,6 @@ function popUp(f,l){
             	out.push(key+": "+f.properties[key] + " <a href='#' id='key-"+key+"' class='delete-row'>x</a>");
         }
         l.bindPopup("<div class='"+ out.lenghth+"' id='" + f._id+"'>"+out.join("<br />")+"</div><br /><input type='button' value='Add Row' id='addRow'><input type='button' value='delete' id='deleteDoc'>");
-    }
-}
-function popU(f,l){
-    var out = [];
-    if (f.properties){
-        for(var key in f.properties){
-                out.push(key+": "+f.properties[key]);
-        }
-        l.bindPopup(out.join("<br />"));
     }
 }
 function docChange(c){
