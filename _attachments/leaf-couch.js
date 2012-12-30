@@ -3,9 +3,9 @@ var m= L.map('map').setView([39.40, -96.42], 4),
 	mq=L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpeg", {attribution:'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', subdomains:'1234'}).addTo(m),
 	h = new L.Hash(m),
 	d = new L.Control.Draw().addTo(m),
-	pouchLayer = L.geoJson.pouch("idb://LocalDB",dbPath,{pointToLayer:pointToLayer,onEachFeature:popUp,direction:"both"}).addTo(m);
+	pouchLayer = L.geoJson.pouch("idb://"+document.location.pathname.split("/")[1],dbPath,{pointToLayer:pointToLayer,onEachFeature:popUp,direction:"both"}).addTo(m);
 	m.on('drawn', function (e) {
-			pouchLayer.addDoc(e.feature);
+			pouchLayer.addDoc(e.feature, pass);
 		});
 		
 
@@ -57,9 +57,9 @@ m.on("popupopen",function(e){
 
         var key = e.target[0].value;
         var value = e.target[1].value
-        pouchLayer.localDB.get(id,function(err,dc){
+        pouchLayer.getDoc(id,function(err,dc){
             dc.properties[key]=value;
-            pouchLayer.localDB.post(dc);
+            pouchLayer.addDoc(dc,pass);
             })
         return false;
         };
@@ -69,10 +69,10 @@ m.on("popupopen",function(e){
     $(".delete-row").click(function(e){ //almost did this without jquery
     ee=e;
         var key = e.currentTarget.id.slice(4)
-        pouchLayer.localDB.get(id,function(err,dc){
+        pouchLayer.getDoc(id,function(err,dc){
             dd=dc;
             delete dc.properties[key]
-            pouchLayer.localDB.post(dc);
+            pouchLayer.addDoc(dc,pass);
             })
         });
 });
