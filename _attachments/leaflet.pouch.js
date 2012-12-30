@@ -110,9 +110,12 @@
         });
       }
     },
+    getDoc: function(id, cb) {
+      return this.localDB.get(id, cb);
+    },
     deleteDoc: function(id, cb) {
       var _this = this;
-      return this.localDB.get(id, function(err, doc) {
+      return this.getDoc(id, function(err, doc) {
         if (!err) {
           _this.localDB.remove(doc, cb);
         }
