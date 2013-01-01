@@ -9,12 +9,6 @@ var m= L.map('map').setView([39.40, -96.42], 4),
 		});
 		
 
-var baseMaps = {
-    "Map Quest": mq
-    }, overlayMaps = {
-	"Drawn Layers":pouchLayer
-	},lc=L.control.layers(baseMaps, overlayMaps).addTo(m);
-
 function pointToLayer(f,l){
 	if(f.properties.radius){
 		return L.circle(l, f.properties.radius);
