@@ -2,8 +2,8 @@
  * http://www.useragentman.com/IETransformsTranslator */
 .github-fork-ribbon-wrapper.right .github-fork-ribbon {
   /* IE positioning hack (couldn't find a transform-origin alternative for IE) */
-  top: -22px;
-  right: -22px;
+  top: -30px;
+  right: -60px;
 
   /* IE8+ */
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865474, M12=-0.7071067811865477, M21=0.7071067811865477, M22=0.7071067811865474, SizingMethod='auto expand')";
