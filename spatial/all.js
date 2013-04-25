@@ -3,4 +3,3 @@ function(doc){
 		emit(doc.geometry, doc);
 	}
 }
-
